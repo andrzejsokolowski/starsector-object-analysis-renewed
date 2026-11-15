@@ -1,0 +1,3 @@
+Version 1.0.0 (2026-11-15)
+- First release: the Objects Analysis ability from Harpuea's Objects Analysis 002, without its frame rate cost. The ability bar no longer scans the whole star system every frame. The object list is built only when you hover the ability.
+- The list no longer starts each object name with a stray comma.

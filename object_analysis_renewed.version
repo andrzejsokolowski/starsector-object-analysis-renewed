@@ -1,0 +1,12 @@
+{
+	"masterVersionFile":"https://raw.githubusercontent.com/andrzejsokolowski/starsector-object-analysis-renewed/main/object_analysis_renewed.version",
+	"changelogURL":"https://raw.githubusercontent.com/andrzejsokolowski/starsector-object-analysis-renewed/main/changelog.txt",
+	"modName":"Object Analysis - Renewed",
+	"modVersion": {
+		"major":1,
+		"minor":0,
+		"patch":0
+	},
+	"starsectorVersion":"0.98a-RC8",
+	"directDownloadURL":"https://github.com/andrzejsokolowski/starsector-object-analysis-renewed/releases/latest/download/ObjectAnalysisRenewed.zip"
+}
