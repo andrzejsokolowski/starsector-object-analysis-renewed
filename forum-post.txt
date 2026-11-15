@@ -58,6 +58,8 @@ My code in this mod is under the CC0 (Creative Commons Zero) License, allowing y
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.4.0[/b]
+[list][li]Updated for Starsector 0.98.5a.[/li][/list]
 [b]1.3.3[/b]
 [list][li]Precise detail now counts derelict ships by class and size, one line per class, such as "7x Muninn-class Frigate (Frigate)", instead of one line per ship by name. A big wreck field no longer runs the tooltip off the screen.[/li][/list]
 [b]1.3.2[/b]

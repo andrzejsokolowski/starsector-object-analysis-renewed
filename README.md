@@ -1,6 +1,6 @@
 # Object Analysis - Renewed
 
-The Objects Analysis ability for Starsector 0.98a, without its frame rate cost.
+The Objects Analysis ability for Starsector 0.98.5a, without its frame rate cost.
 
 Hover the Objects Analysis ability on the ability bar to list the objects in the current star system
 that a scan could pick up (stations and neutrino sources), without their locations.
