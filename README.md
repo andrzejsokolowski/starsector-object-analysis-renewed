@@ -11,6 +11,6 @@ you hover the ability.
 
 Click the ability to scan (costs 5 volatiles by default): the fleet stops for about 5 seconds, then every object in the star system is discovered and named on the map. Works only inside star systems.
 
-LunaLib settings (optional): Detail (Precise, Normal, Vague), Show fleets, Gray out found objects, Active scan and its cost.
+LunaLib settings (optional): Detail (Precise, Normal, Vague), Show fleets, Gray out found objects, Active scan and its cost, Planet survey (Preliminary, Full, None).
 
 Replaces Objects Analysis: turn that mod off. Safe to add to or remove from a running save.

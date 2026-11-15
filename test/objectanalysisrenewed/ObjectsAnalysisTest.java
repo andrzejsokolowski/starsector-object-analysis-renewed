@@ -55,6 +55,22 @@ class ObjectsAnalysisTest {
     }
 
     @Test
+    void surveyDefaultsToPreliminary() {
+        assertEquals(Settings.Survey.PRELIMINARY, Settings.parseSurvey(null));
+        assertEquals(Settings.Survey.PRELIMINARY, Settings.parseSurvey("Preliminary"));
+        assertEquals(Settings.Survey.FULL, Settings.parseSurvey("Full"));
+        assertEquals(Settings.Survey.NONE, Settings.parseSurvey("None"));
+    }
+
+    @Test
+    void scanMessageNamesWhatHappened() {
+        assertEquals("Objects Analysis: the scan found nothing new.", ObjectsAnalysis.scanMessage(0, 0));
+        assertEquals("Objects Analysis: the scan found 3 new objects and surveyed 1 planet.", ObjectsAnalysis.scanMessage(3, 1));
+        assertEquals("Objects Analysis: the scan surveyed 4 planets.", ObjectsAnalysis.scanMessage(0, 4));
+        assertEquals("Objects Analysis: the scan found 1 new object.", ObjectsAnalysis.scanMessage(1, 0));
+    }
+
+    @Test
     void hiddenListsHoldWhatAndrzejRuledOut() {
         assertTrue(ObjectsAnalysis.HIDDEN_TYPES.contains("stellar_mirror"));
         assertTrue(ObjectsAnalysis.HIDDEN_TYPES.contains("fusion_lamp"));

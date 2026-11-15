@@ -24,6 +24,9 @@ public final class Settings {
         VAGUE
     }
 
+    /** How far the active scan surveys the planets in the system. */
+    public enum Survey { PRELIMINARY, FULL, NONE }
+
     static final String DETAIL_PRECISE = "Precise";
     static final String DETAIL_NORMAL = "Normal";
     static final String DETAIL_VAGUE = "Vague";
@@ -47,14 +50,21 @@ public final class Settings {
         final boolean activeScan;
         final String cost;
         final int costAmount;
+        final Survey survey;
 
         Snapshot(Detail detail, boolean showFleets, boolean greyFound, boolean activeScan, String cost, int costAmount) {
+            this(detail, showFleets, greyFound, activeScan, cost, costAmount, Survey.PRELIMINARY);
+        }
+
+        Snapshot(Detail detail, boolean showFleets, boolean greyFound, boolean activeScan, String cost, int costAmount,
+                Survey survey) {
             this.detail = detail;
             this.showFleets = showFleets;
             this.greyFound = greyFound;
             this.activeScan = activeScan;
             this.cost = cost;
             this.costAmount = Math.max(0, costAmount);
+            this.survey = survey == null ? Survey.PRELIMINARY : survey;
         }
 
         /** The commodity id the scan uses up, or null when it is free. */
@@ -106,7 +116,15 @@ public final class Settings {
                 grey == null || grey,
                 active == null || active,
                 string("oar_cost"),
-                amount == null ? DEFAULT_COST_AMOUNT : amount);
+                amount == null ? DEFAULT_COST_AMOUNT : amount,
+                parseSurvey(string("oar_survey")));
+    }
+
+    /** Unknown or missing text gives the default, Preliminary. */
+    static Survey parseSurvey(String s) {
+        if ("Full".equalsIgnoreCase(s)) return Survey.FULL;
+        if ("None".equalsIgnoreCase(s)) return Survey.NONE;
+        return Survey.PRELIMINARY;
     }
 
     /** Unknown or missing text gives the default, Precise. */

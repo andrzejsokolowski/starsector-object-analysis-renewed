@@ -12,6 +12,8 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CampaignFleetAPI;
 import com.fs.starfarer.api.campaign.CargoAPI;
 import com.fs.starfarer.api.campaign.LocationAPI;
+import com.fs.starfarer.api.campaign.PlanetAPI;
+import com.fs.starfarer.api.campaign.listeners.ListenerUtil;
 import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
@@ -82,11 +84,10 @@ public class ObjectsAnalysis extends BaseDurationAbility {
         if (!performed && level >= 1f) {
             performed = true;
             int found = discoverAll(fleet.getContainingLocation());
+            int surveyed = surveyAll(fleet.getContainingLocation(), Settings.fresh().survey);
             if (fleet.isPlayerFleet()) {
-                Global.getSector().getCampaignUI().addMessage(found > 0
-                        ? "Objects Analysis: the scan found " + found + (found == 1 ? " new object." : " new objects.")
-                        : "Objects Analysis: the scan found nothing new.",
-                        found > 0 ? Misc.getPositiveHighlightColor() : Misc.getGrayColor());
+                Global.getSector().getCampaignUI().addMessage(scanMessage(found, surveyed),
+                        found + surveyed > 0 ? Misc.getPositiveHighlightColor() : Misc.getGrayColor());
             }
         }
     }
@@ -150,6 +151,40 @@ public class ObjectsAnalysis extends BaseDurationAbility {
             n++;
         }
         return n;
+    }
+
+    /**
+     * Raises every planet's survey level in the location to the setting's level (never lowers it), as the
+     * base game's survey calls do. A full survey is also reported to survey listeners, so survey missions
+     * for that planet complete. No per-planet messages: the scan sums them up. Returns how many changed.
+     */
+    static int surveyAll(LocationAPI location, Settings.Survey level) {
+        if (location == null || location.isHyperspace() || level == Settings.Survey.NONE) return 0;
+        int n = 0;
+        for (PlanetAPI planet : new ArrayList<>(location.getPlanets())) {
+            if (planet.isStar()) continue;
+            MarketAPI market = planet.getMarket();
+            if (market == null) continue;
+            MarketAPI.SurveyLevel now = market.getSurveyLevel();
+            if (level == Settings.Survey.FULL) {
+                if (now == MarketAPI.SurveyLevel.FULL) continue;
+                Misc.setFullySurveyed(market, null, false);
+                ListenerUtil.reportPlayerSurveyedPlanet(planet);
+                n++;
+            } else if (now == null || now == MarketAPI.SurveyLevel.NONE || now == MarketAPI.SurveyLevel.SEEN) {
+                Misc.setPreliminarySurveyed(market, null, false);
+                n++;
+            }
+        }
+        return n;
+    }
+
+    static String scanMessage(int found, int surveyed) {
+        if (found == 0 && surveyed == 0) return "Objects Analysis: the scan found nothing new.";
+        List<String> parts = new ArrayList<>();
+        if (found > 0) parts.add("found " + found + (found == 1 ? " new object" : " new objects"));
+        if (surveyed > 0) parts.add("surveyed " + surveyed + (surveyed == 1 ? " planet" : " planets"));
+        return "Objects Analysis: the scan " + String.join(" and ", parts) + ".";
     }
 
     // ---- The list ----
@@ -240,8 +275,11 @@ public class ObjectsAnalysis extends BaseDurationAbility {
         if (s.activeScan) {
             String cost = s.costText();
             boolean canPay = canPay(fleet, s);
+            String survey = s.survey == Settings.Survey.FULL ? " Also fully surveys every planet."
+                    : s.survey == Settings.Survey.PRELIMINARY ? " Also gives every planet a preliminary survey." : "";
             String line = "Click to scan: stops the fleet for about 5 seconds and makes it easier to see, then "
-                    + "discovers every object in this star system and names it on the map. Costs " + cost + ".";
+                    + "discovers every object in this star system and names it on the map." + survey
+                    + " Costs " + cost + ".";
             if (canPay) tooltip.addPara(line, pad, highlight, cost);
             else tooltip.addPara(line + " Not enough in your cargo.", bad, pad);
         }

@@ -46,6 +46,13 @@ Precise names derelicts from `DerelictShipEntityPlugin.getData().ship` (shipName
   DiscoverEntityPlugin (map name, message, XP). abilities.csv: 0.2 / 0.2 / 0.1 days, 1 day cooldown.
 - No list and no scan in hyperspace.
 
+## 1.3.0
+
+- `oar_survey` Radio Preliminary (default) / Full / None. At full scan level `surveyAll` raises every
+  non-star planet's market survey level (never lowers): Misc.setPreliminarySurveyed or Misc.setFullySurveyed
+  (no per-planet message), and for Full also ListenerUtil.reportPlayerSurveyedPlanet, so survey missions
+  complete. No survey data commodity and no survey XP are given. One summary message counts objects and planets.
+
 ## Build
 
 `./gradlew releaseZip test` compiles against the game, runs the checks and tests, and writes

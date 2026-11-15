@@ -8,3 +8,7 @@ oar_greyFound,Gray out found objects,Boolean,true,,Objects you have already foun
 oar_activeScan,Active scan,Boolean,true,,"The ability can be clicked: the fleet stops for about 5 seconds, then every object in the star system is discovered and named on the map. Off: the ability only lists objects when you hover it.",,,
 oar_cost,Scan cost,Radio,Volatiles,"Volatiles, Transplutonics, Nothing",What each active scan uses up from your cargo.,,,
 oar_costAmount,Scan cost amount,Int,5,,How many units each active scan uses up.,0,100,
+oar_survey,Planet survey,Radio,Preliminary,"Preliminary, Full, None","What the active scan does to the planets in the star system.
+Preliminary: every planet gets a preliminary survey.
+Full: every planet is fully surveyed, as if you surveyed it yourself (without its survey data to sell).
+None: planets are left alone.",,,
