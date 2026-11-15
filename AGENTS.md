@@ -34,6 +34,18 @@ Precise names derelicts from `DerelictShipEntityPlugin.getData().ship` (shipName
 `salvageable` tag and cargo pods. Fleets: all but the player's and station fleets; in hyperspace within
 2000 units.
 
+## 1.2.0
+
+- List: every entity tagged neutrino, neutrino_low, neutrino_high or station, always (the original's 30% roll and
+  qualifying check are gone, Andrzej: "This stupid system sucks"). Hidden: `HIDDEN_TYPES` (stellar_mirror,
+  stellar_shade, fusion_lamp), `HIDDEN_TAGS` (niko_MPC_satellite, What We Left Behind), and station-tagged
+  entities on a real colony market. Gates stay (Andrzej). Repeats grouped by name and found state.
+- Active scan (`oar_activeScan`, default on): `isUsable` reads `Settings.now()` (cached 1 s, it runs every
+  frame). activateImpl takes the cost (`oar_cost` volatiles / rare_metals / nothing, `oar_costAmount` 5);
+  at full level `discoverAll` hands every discoverable entity in the system to the game's
+  DiscoverEntityPlugin (map name, message, XP). abilities.csv: 0.2 / 0.2 / 0.1 days, 1 day cooldown.
+- No list and no scan in hyperspace.
+
 ## Build
 
 `./gradlew releaseZip test` compiles against the game, runs the checks and tests, and writes

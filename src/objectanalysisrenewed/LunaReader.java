@@ -14,4 +14,8 @@ final class LunaReader {
     static Boolean bool(String modId, String id) {
         return LunaSettings.getBoolean(modId, id);
     }
+
+    static Integer integer(String modId, String id) {
+        return LunaSettings.getInt(modId, id);
+    }
 }

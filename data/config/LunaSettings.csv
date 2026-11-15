@@ -3,4 +3,8 @@ oar_detail,Detail,Radio,Precise,"Precise, Normal, Vague","How much the Objects A
 Precise: derelict ships by name and class, fleets by name.
 Normal: objects by the names the game shows, fleets counted as hostile, neutral and friendly.
 Vague: only whether something is left to salvage, and how many fleets there are.",,,
-oar_fleets,Show fleets,Boolean,true,,"List the fleets in the current star system too. In hyperspace, only fleets within one map grid cell.",,,
+oar_fleets,Show fleets,Boolean,true,,List the fleets in the current star system too.,,,
+oar_greyFound,Gray out found objects,Boolean,true,,Objects you have already found show in gray.,,,
+oar_activeScan,Active scan,Boolean,true,,"The ability can be clicked: the fleet stops for about 5 seconds, then every object in the star system is discovered and named on the map. Off: the ability only lists objects when you hover it.",,,
+oar_cost,Scan cost,Radio,Volatiles,"Volatiles, Transplutonics, Nothing",What each active scan uses up from your cargo.,,,
+oar_costAmount,Scan cost amount,Int,5,,How many units each active scan uses up.,0,100,
