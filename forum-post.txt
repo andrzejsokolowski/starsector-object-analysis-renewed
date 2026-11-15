@@ -24,9 +24,13 @@ The Objects Analysis ability from Harpuea's Objects Analysis, without its frame 
 [li][b]Planet survey:[/b] what the scan does to the planets: Preliminary (default), Full or None.[/li]
 [/list]
 
-[hr][center][size=12pt][b]Performance[/b][/size][/center][hr]
+[hr][center][size=12pt][b]What Was Wrong With the Original[/b][/size][/center][hr]
 [list]
-[li]Costs nothing while you fly: the list is only built when you hover the ability, and the scan only runs when you click it.[/li]
+[li][b]It ate your frame rate.[/b] Every frame it scanned the whole star system, then rescanned it again for every match, only to decide the ability could not be used. In a busy system that was about 7% of every frame on the campaign map. Now the list is only built when you hover the ability.[/li]
+[li][b]The list flickered.[/b] A random roll on every hover decided whether faint objects counted, so the same system could show a list one moment and "No objects in range" the next. Now it always shows everything.[/li]
+[li][b]The list was full of junk.[/b] Stellar mirrors, fusion lamps, every colony's orbital station, battlestation and star fortress, and What We Left Behind's anti-asteroid satellites (about 20 around a single planet). Now those are left out, repeats are grouped and found objects are gray.[/li]
+[li][b]It could not find anything for you.[/b] It only told you something was out there; the objects stayed unnamed sensor ghosts on the map until you flew up to each one. Now a click discovers them all and surveys the planets.[/li]
+[li][b]In hyperspace it listed all of hyperspace.[/b] Now it works only inside star systems.[/li]
 [/list]
 
 [hr][center][size=12pt][b]Compatibility[/b][/size][/center][hr]
