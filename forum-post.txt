@@ -1,0 +1,50 @@
+[center][img width=128]https://raw.githubusercontent.com/andrzejsokolowski/starsector-object-analysis-renewed/main/icon.png[/img]
+[size=28pt][url=https://github.com/andrzejsokolowski/starsector-object-analysis-renewed/releases/latest][b]Object Analysis - Renewed[/b][/url][/size]
+[url=https://github.com/andrzejsokolowski/starsector-object-analysis-renewed/releases/latest][img]https://img.shields.io/github/downloads/andrzejsokolowski/starsector-object-analysis-renewed/total?style=for-the-badge&label=download[/img][/url]  [url=https://github.com/andrzejsokolowski/starsector-object-analysis-renewed][img]https://img.shields.io/github/v/release/andrzejsokolowski/starsector-object-analysis-renewed?display_name=tag&sort=semver&style=for-the-badge&label=source[/img][/url]
+[/center]
+[center][b]
+WHAT DOES THIS MOD DO?
+The Objects Analysis ability from Harpuea's Objects Analysis, without its frame rate cost.
+[/b][/center]
+[center]
+[hr][center][size=12pt][b]The Ability[/b][/size][/center][hr]
+[list]
+[li]Hover Objects Analysis on your ability bar to list the objects in the current star system that a scan could pick up: stations and neutrino sources.[/li]
+[li]It does not say where they are.[/li]
+[/list]
+
+[hr][center][size=12pt][b]What Changed[/b][/size][/center][hr]
+[list]
+[li]The original scanned the whole star system every frame to check whether the ability could be switched on. It never can. With many objects in a system that cost about 7% of every frame on the campaign map.[/li]
+[li]Now nothing runs until you hover the ability, and the list is built with far fewer searches.[/li]
+[/list]
+
+[hr][center][size=12pt][b]Compatibility[/b][/size][/center][hr]
+[list]
+[li]Replaces Objects Analysis: turn that mod off. With both on, the game stops at start and tells you.[/li]
+[li]Same ability, so it keeps its place on your ability bar.[/li]
+[li]Safe to add to or remove from a game in progress.[/li]
+[/list]
+
+[hr][center][size=12pt][b]Credits[/b][/size][/center][hr]
+[list]
+[li]Harpuea made the original Objects Analysis.[/li]
+[/list]
+[/center]
+
+[spoiler=AI use disclaimer]Some or all assets and code in this mod were created using AI tools:
+[list]
+[li]Code: Claude Code (Claude Opus 5.5)[/li]
+[li]Text (readme and this post): Claude Code (Claude Opus 5.5)[/li]
+[li]Icons: Claude Code (Claude Opus 5.5)[/li][/list]
+[/spoiler]
+
+[spoiler=License]
+My code in this mod is under the CC0 (Creative Commons Zero) License, allowing you to do whatever you want with it, without giving any credit to anyone. The ability itself is Harpuea's design from Objects Analysis.
+[/spoiler]
+
+[spoiler=Version log]
+[b]1.0.0[/b]
+[list][li]First release: the Objects Analysis ability from Harpuea's Objects Analysis 002, without its frame rate cost. The ability bar no longer scans the whole star system every frame. The object list is built only when you hover the ability.[/li]
+[li]The list no longer starts each object name with a stray comma.[/li][/list]
+[/spoiler]
