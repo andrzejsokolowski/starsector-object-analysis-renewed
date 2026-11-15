@@ -16,7 +16,7 @@ public final class Settings {
 
     /** How much the list says about each object. */
     public enum Detail {
-        /** Real names: derelict ships by ship name and class, fleets by name. */
+        /** Derelict ships counted by hull and size ("7x Muninn-class Frigate (Frigate)"), fleets by name. */
         PRECISE,
         /** Object names as the game shows them, fleets counted by hostility. */
         NORMAL,

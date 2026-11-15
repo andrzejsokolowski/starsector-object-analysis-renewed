@@ -3,7 +3,7 @@
   "name": "Object Analysis - Renewed",
   "author": "Oddisz (original by Harpuea)",
   "utility": "true",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "modThreadId": "36388",
   "description": "The Objects Analysis ability without its frame rate cost. Hover it to list the objects in the current star system, click it to scan and discover them all. Detail level and fleets in LunaLib settings. Replaces Objects Analysis: turn that mod off.",
   "gameVersion": "0.98a-RC8",

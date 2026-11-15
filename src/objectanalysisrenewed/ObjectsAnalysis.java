@@ -18,6 +18,8 @@ import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.listeners.DiscoverEntityPlugin;
+import com.fs.starfarer.api.combat.ShipAPI.HullSize;
+import com.fs.starfarer.api.combat.ShipHullSpecAPI;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
@@ -249,19 +251,26 @@ public class ObjectsAnalysis extends BaseDurationAbility {
             tooltip.addPara("No objects.", bad, pad);
         } else {
             tooltip.addPara("Objects:", pad);
-            // Same name and same found state count as one line ("Debris Field x4").
+            // Same name and same found state count as one line ("Debris Field x4"). In Precise,
+            // derelict ships group by hull ("7x Muninn-class Fast Destroyer (Destroyer)"); one line per
+            // ship ran a big wreck field off the screen (OAR-2).
             Map<String, Integer> counts = new LinkedHashMap<>();
             Map<String, Color> colors = new LinkedHashMap<>();
+            Set<String> ships = new LinkedHashSet<>();
             for (SectorEntityToken object : objects) {
-                String name = s.detail == Settings.Detail.PRECISE ? preciseName(object) : object.getFullName();
+                String hull = s.detail == Settings.Detail.PRECISE ? derelictHull(object) : null;
+                String name = hull != null ? hull : object.getFullName();
                 boolean grey = s.greyFound && !object.isDiscoverable();
                 String key = (grey ? "1" : "0") + name;
                 counts.merge(key, 1, Integer::sum);
                 colors.putIfAbsent(key, grey ? gray : object.getIndicatorColor());
+                if (hull != null) ships.add(key);
             }
             float currPad = 3f;
             for (Map.Entry<String, Integer> e : counts.entrySet()) {
-                String label = countLabel(e.getKey().substring(1), e.getValue());
+                String name = e.getKey().substring(1);
+                String label = ships.contains(e.getKey()) ? shipCountLabel(name, e.getValue())
+                        : countLabel(name, e.getValue());
                 tooltip.addPara("    %s", currPad, colors.get(e.getKey()), label);
                 currPad = 0f;
             }
@@ -309,22 +318,39 @@ public class ObjectsAnalysis extends BaseDurationAbility {
     static final String VAGUE_SALVAGE = "Something here can still be salvaged.";
     static final String VAGUE_NONE = "Nothing here is left to salvage.";
 
-    /** A derelict ship by its name and class ("ISS Hamatsu, Legion-class Carrier"); anything else as the game names it. */
-    static String preciseName(SectorEntityToken object) {
-        if (object.getCustomPlugin() instanceof DerelictShipEntityPlugin) {
-            DerelictShipEntityPlugin plugin = (DerelictShipEntityPlugin) object.getCustomPlugin();
-            DerelictShipEntityPlugin.DerelictShipData data = plugin.getData();
-            ShipVariantAPI variant = data == null || data.ship == null ? null : data.ship.getVariant();
-            if (variant != null && variant.getHullSpec() != null) {
-                return shipLabel(data.ship.shipName, variant.getHullSpec().getNameWithDesignationWithDashClass());
-            }
-        }
-        return object.getFullName();
+    /**
+     * A derelict ship's hull with its size ("Legion-class Carrier (Capital)"), or null for anything that
+     * is not a derelict ship. Ship names are left out so that ships of one hull share a line.
+     */
+    static String derelictHull(SectorEntityToken object) {
+        if (!(object.getCustomPlugin() instanceof DerelictShipEntityPlugin)) return null;
+        DerelictShipEntityPlugin plugin = (DerelictShipEntityPlugin) object.getCustomPlugin();
+        DerelictShipEntityPlugin.DerelictShipData data = plugin.getData();
+        ShipVariantAPI variant = data == null || data.ship == null ? null : data.ship.getVariant();
+        ShipHullSpecAPI hull = variant == null ? null : variant.getHullSpec();
+        if (hull == null) return null;
+        return hullLabel(hull.getNameWithDesignationWithDashClass(), hull.getHullSize());
     }
 
-    static String shipLabel(String shipName, String hullClass) {
-        if (shipName == null || shipName.trim().isEmpty()) return hullClass;
-        return shipName + ", " + hullClass;
+    static String hullLabel(String hullClass, HullSize size) {
+        String sizeName = sizeName(size);
+        return sizeName == null ? hullClass : hullClass + " (" + sizeName + ")";
+    }
+
+    static String sizeName(HullSize size) {
+        if (size == null) return null;
+        switch (size) {
+            case FRIGATE: return "Frigate";
+            case DESTROYER: return "Destroyer";
+            case CRUISER: return "Cruiser";
+            case CAPITAL_SHIP: return "Capital";
+            default: return null;
+        }
+    }
+
+    /** Andrzej's format for ships: the count first, also for one ("1x Paragon-class Battleship (Capital)"). */
+    static String shipCountLabel(String hull, int count) {
+        return count + "x " + hull;
     }
 
     /** Anything with loot still in it: salvage targets and cargo pods. */

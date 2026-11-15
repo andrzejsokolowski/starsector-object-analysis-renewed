@@ -29,8 +29,9 @@ false at once, and the object list is built only in `createTooltip`, each tag se
 
 `Settings` reads LunaLib (`oar_detail` Radio Precise/Normal/Vague, `oar_fleets` Boolean) when the tooltip
 opens; only `LunaReader` names LunaLib, so the mod runs without it on defaults (Precise, fleets on).
-Precise names derelicts from `DerelictShipEntityPlugin.getData().ship` (shipName + hull
-`getNameWithDesignationWithDashClass`), even when the game would hide the name. Vague: one line from the
+Precise reads derelicts from `DerelictShipEntityPlugin.getData().ship`: since 1.3.3 (OAR-2) one line per
+hull, "7x Muninn-class Frigate (Frigate)" (count first, `getNameWithDesignationWithDashClass`, hull size;
+ship names dropped because a big wreck field ran the tooltip off the screen). Vague: one line from the
 `salvageable` tag and cargo pods. Fleets: all but the player's and station fleets; in hyperspace within
 2000 units.
 

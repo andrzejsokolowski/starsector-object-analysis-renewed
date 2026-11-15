@@ -1,6 +1,6 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
 oar_detail,Detail,Radio,Precise,"Precise, Normal, Vague","How much the Objects Analysis tooltip tells you.
-Precise: derelict ships by name and class, fleets by name.
+Precise: derelict ships counted by class and size, fleets by name.
 Normal: objects by the names the game shows, fleets counted as hostile, neutral and friendly.
 Vague: only whether something is left to salvage, and how many fleets there are.",,,
 oar_fleets,Show fleets,Boolean,true,,List the fleets in the current star system too.,,,

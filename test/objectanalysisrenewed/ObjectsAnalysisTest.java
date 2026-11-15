@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.fs.starfarer.api.combat.ShipAPI.HullSize;
+
 import org.junit.jupiter.api.Test;
 
 class ObjectsAnalysisTest {
@@ -19,10 +21,14 @@ class ObjectsAnalysisTest {
     }
 
     @Test
-    void shipLabelHasNameAndClass() {
-        assertEquals("ISS Hamatsu, Legion-class Carrier", ObjectsAnalysis.shipLabel("ISS Hamatsu", "Legion-class Carrier"));
-        assertEquals("Legion-class Carrier", ObjectsAnalysis.shipLabel(null, "Legion-class Carrier"));
-        assertEquals("Legion-class Carrier", ObjectsAnalysis.shipLabel("  ", "Legion-class Carrier"));
+    void shipLinesAreCountHullAndSize() {
+        assertEquals("7x Muninn-class Frigate (Frigate)", ObjectsAnalysis.shipCountLabel(
+                ObjectsAnalysis.hullLabel("Muninn-class Frigate", HullSize.FRIGATE), 7));
+        assertEquals("2x Legion-class Carrier (Capital)", ObjectsAnalysis.shipCountLabel(
+                ObjectsAnalysis.hullLabel("Legion-class Carrier", HullSize.CAPITAL_SHIP), 2));
+        assertEquals("1x Muninn-class Fast Destroyer (Destroyer)", ObjectsAnalysis.shipCountLabel(
+                ObjectsAnalysis.hullLabel("Muninn-class Fast Destroyer", HullSize.DESTROYER), 1));
+        assertEquals("Odd Hull", ObjectsAnalysis.hullLabel("Odd Hull", HullSize.FIGHTER));
     }
 
     @Test
