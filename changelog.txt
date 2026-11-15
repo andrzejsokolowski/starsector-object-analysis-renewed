@@ -1,3 +1,6 @@
+Version 1.3.1 (2026-11-15)
+- Added the forum topic link for Version Checker.
+
 Version 1.3.0 (2026-11-15)
 - New LunaLib setting Planet survey (Preliminary by default): the active scan also surveys every planet in the star system. Preliminary gives each planet a preliminary survey, Full surveys each one fully (survey missions for it complete, but no survey data to sell), None leaves planets alone.
 

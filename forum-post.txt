@@ -24,10 +24,9 @@ The Objects Analysis ability from Harpuea's Objects Analysis, without its frame 
 [li][b]Planet survey:[/b] what the scan does to the planets: Preliminary (default), Full or None.[/li]
 [/list]
 
-[hr][center][size=12pt][b]What Changed[/b][/size][/center][hr]
+[hr][center][size=12pt][b]Performance[/b][/size][/center][hr]
 [list]
-[li]The original scanned the whole star system every frame to check whether the ability could be switched on. It never can. With many objects in a system that cost about 7% of every frame on the campaign map.[/li]
-[li]Now nothing runs until you hover the ability, and the list is built with far fewer searches.[/li]
+[li]Costs nothing while you fly: the list is only built when you hover the ability, and the scan only runs when you click it.[/li]
 [/list]
 
 [hr][center][size=12pt][b]Compatibility[/b][/size][/center][hr]
@@ -55,6 +54,8 @@ My code in this mod is under the CC0 (Creative Commons Zero) License, allowing y
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.3.1[/b]
+[list][li]Added the forum topic link for Version Checker.[/li][/list]
 [b]1.3.0[/b]
 [list][li]New LunaLib setting Planet survey (Preliminary by default): the active scan also surveys every planet in the star system. Preliminary gives each planet a preliminary survey, Full surveys each one fully (survey missions for it complete, but no survey data to sell), None leaves planets alone.[/li][/list]
 [b]1.2.0[/b]
