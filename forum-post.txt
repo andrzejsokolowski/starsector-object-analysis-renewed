@@ -13,6 +13,12 @@ The Objects Analysis ability from Harpuea's Objects Analysis, without its frame 
 [li]It does not say where they are.[/li]
 [/list]
 
+[hr][center][size=12pt][b]Settings (LunaLib, optional)[/b][/size][/center][hr]
+[list]
+[li][b]Detail:[/b] Precise (default) shows derelict ships by name and class and fleets by name. Normal shows objects by the names the game uses and counts fleets as hostile, neutral and friendly. Vague only says whether something can still be salvaged, and how many fleets there are.[/li]
+[li][b]Show fleets:[/b] on by default.[/li]
+[/list]
+
 [hr][center][size=12pt][b]What Changed[/b][/size][/center][hr]
 [list]
 [li]The original scanned the whole star system every frame to check whether the ability could be switched on. It never can. With many objects in a system that cost about 7% of every frame on the campaign map.[/li]
@@ -44,6 +50,10 @@ My code in this mod is under the CC0 (Creative Commons Zero) License, allowing y
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.1.0[/b]
+[list][li]New LunaLib setting Detail (Precise by default). Precise shows derelict ships by name and class, such as "ISS Hamatsu, Legion-class Carrier". Normal shows objects as before. Vague only says whether something in the system can still be salvaged.[/li]
+[li]New LunaLib setting Show fleets (on by default): the tooltip also lists the fleets in the system. Precise names each fleet, Normal counts hostile, neutral and friendly fleets, Vague gives one total. In hyperspace only fleets within one map grid cell count.[/li]
+[li]LunaLib is optional: without it the defaults apply.[/li][/list]
 [b]1.0.0[/b]
 [list][li]First release: the Objects Analysis ability from Harpuea's Objects Analysis 002, without its frame rate cost. The ability bar no longer scans the whole star system every frame. The object list is built only when you hover the ability.[/li]
 [li]The list no longer starts each object name with a stray comma.[/li][/list]

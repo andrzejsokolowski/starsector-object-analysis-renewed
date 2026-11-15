@@ -9,4 +9,6 @@ Based on Harpuea's Objects Analysis 002. That version scanned the whole star sys
 decide whether the ability could be switched on (it never can). This one only builds the list when
 you hover the ability.
 
+LunaLib settings (optional): Detail (Precise, Normal, Vague) and Show fleets.
+
 Replaces Objects Analysis: turn that mod off. Safe to add to or remove from a running save.

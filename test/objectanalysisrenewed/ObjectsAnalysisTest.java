@@ -37,6 +37,34 @@ class ObjectsAnalysisTest {
     }
 
     @Test
+    void detailDefaultsToPrecise() {
+        org.junit.jupiter.api.Assertions.assertEquals(Settings.Detail.PRECISE, Settings.parseDetail(null));
+        org.junit.jupiter.api.Assertions.assertEquals(Settings.Detail.PRECISE, Settings.parseDetail("Precise"));
+        org.junit.jupiter.api.Assertions.assertEquals(Settings.Detail.NORMAL, Settings.parseDetail("Normal"));
+        org.junit.jupiter.api.Assertions.assertEquals(Settings.Detail.VAGUE, Settings.parseDetail("Vague"));
+        org.junit.jupiter.api.Assertions.assertEquals(Settings.Detail.PRECISE, Settings.parseDetail("something else"));
+    }
+
+    @Test
+    void shipLabelHasNameAndClass() {
+        org.junit.jupiter.api.Assertions.assertEquals("ISS Hamatsu, Legion-class Carrier",
+                ObjectsAnalysis.shipLabel("ISS Hamatsu", "Legion-class Carrier"));
+        org.junit.jupiter.api.Assertions.assertEquals("Legion-class Carrier",
+                ObjectsAnalysis.shipLabel(null, "Legion-class Carrier"));
+        org.junit.jupiter.api.Assertions.assertEquals("Legion-class Carrier",
+                ObjectsAnalysis.shipLabel("  ", "Legion-class Carrier"));
+    }
+
+    @Test
+    void stanceLineListsOnlyKindsPresent() {
+        org.junit.jupiter.api.Assertions.assertEquals("Hostile fleet x3, Friendly fleet x2",
+                ObjectsAnalysis.stanceLine(3, 0, 2));
+        org.junit.jupiter.api.Assertions.assertEquals("Hostile fleet x1, Neutral fleet x4, Friendly fleet x2",
+                ObjectsAnalysis.stanceLine(1, 4, 2));
+        org.junit.jupiter.api.Assertions.assertEquals("Neutral fleet x1", ObjectsAnalysis.stanceLine(0, 1, 0));
+    }
+
+    @Test
     void skipChanceIsTheShippedJarsValue() {
         assertTrue(ObjectsAnalysis.counts(false, false, true, false, 0.3f));
         assertFalse(ObjectsAnalysis.counts(false, false, true, false, 0.2999f));

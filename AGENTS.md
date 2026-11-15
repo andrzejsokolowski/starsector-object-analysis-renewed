@@ -25,6 +25,15 @@ false at once, and the object list is built only in `createTooltip`, each tag se
 - With the original enabled too, `onApplicationLoad` stops the game with a message to turn it off: both
   define the ability, and the original's folder sorts later, so its slow row would win.
 
+## Settings (1.1.0)
+
+`Settings` reads LunaLib (`oar_detail` Radio Precise/Normal/Vague, `oar_fleets` Boolean) when the tooltip
+opens; only `LunaReader` names LunaLib, so the mod runs without it on defaults (Precise, fleets on).
+Precise names derelicts from `DerelictShipEntityPlugin.getData().ship` (shipName + hull
+`getNameWithDesignationWithDashClass`), even when the game would hide the name. Vague: one line from the
+`salvageable` tag and cargo pods. Fleets: all but the player's and station fleets; in hyperspace within
+2000 units.
+
 ## Build
 
 `./gradlew releaseZip test` compiles against the game, runs the checks and tests, and writes
