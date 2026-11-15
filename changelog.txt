@@ -1,3 +1,7 @@
+Version 1.3.2 (2026-11-15)
+- Shorter tooltip: "Lists all objects in the current star system", no "in range" (the list covers the whole system), no "Gray: already found" line and no "Expand tooltip to view conflicting abilities" line.
+- The scan line now reads "Active Ability: System-wide scan", and names the preliminary or full planet survey only when the Planet survey setting is on.
+
 Version 1.3.1 (2026-11-15)
 - Added the forum topic link for Version Checker.
 

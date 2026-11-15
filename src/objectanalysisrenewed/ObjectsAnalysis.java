@@ -228,11 +228,9 @@ public class ObjectsAnalysis extends BaseDurationAbility {
         float pad = 10f;
 
         tooltip.addTitle(spec.getName());
-        tooltip.addPara("Lists the objects in the current star system that your sensors can pick up, without "
-                + "their locations.", pad);
+        tooltip.addPara(INTRO, pad);
         if (fleet.isInHyperspace() || fleet.isInHyperspaceTransition()) {
             tooltip.addPara("Works only inside a star system.", bad, pad);
-            addIncompatibleToTooltip(tooltip, expanded);
             return;
         }
 
@@ -248,9 +246,9 @@ public class ObjectsAnalysis extends BaseDurationAbility {
             if (salvage) tooltip.addPara(VAGUE_SALVAGE, pad, highlight, VAGUE_SALVAGE);
             else tooltip.addPara(VAGUE_NONE, bad, pad);
         } else if (objects.isEmpty()) {
-            tooltip.addPara("No objects in range.", bad, pad);
+            tooltip.addPara("No objects.", bad, pad);
         } else {
-            tooltip.addPara("The following objects are in range:", pad);
+            tooltip.addPara("Objects:", pad);
             // Same name and same found state count as one line ("Debris Field x4").
             Map<String, Integer> counts = new LinkedHashMap<>();
             Map<String, Color> colors = new LinkedHashMap<>();
@@ -267,7 +265,6 @@ public class ObjectsAnalysis extends BaseDurationAbility {
                 tooltip.addPara("    %s", currPad, colors.get(e.getKey()), label);
                 currPad = 0f;
             }
-            if (s.greyFound) tooltip.addPara("Gray: already found.", gray, 3f);
         }
 
         if (s.showFleets) addFleets(tooltip, fleet, s.detail, pad, bad);
@@ -275,15 +272,21 @@ public class ObjectsAnalysis extends BaseDurationAbility {
         if (s.activeScan) {
             String cost = s.costText();
             boolean canPay = canPay(fleet, s);
-            String survey = s.survey == Settings.Survey.FULL ? " Also fully surveys every planet."
-                    : s.survey == Settings.Survey.PRELIMINARY ? " Also gives every planet a preliminary survey." : "";
-            String line = "Click to scan: stops the fleet for about 5 seconds and makes it easier to see, then "
-                    + "discovers every object in this star system and names it on the map." + survey
-                    + " Costs " + cost + ".";
+            String line = scanLine(s.survey) + ". Costs " + cost + ".";
             if (canPay) tooltip.addPara(line, pad, highlight, cost);
             else tooltip.addPara(line + " Not enough in your cargo.", bad, pad);
         }
-        addIncompatibleToTooltip(tooltip, expanded);
+    }
+
+    static final String INTRO = "Lists all objects in the current star system.";
+
+    /** Andrzej's wording (OAR-8); the survey part only when the scan surveys planets. */
+    static String scanLine(Settings.Survey survey) {
+        String line = "Active Ability: System-wide scan: for 5 seconds, prepare a scan pulse that reveals and "
+                + "discovers all objects in the system";
+        if (survey == Settings.Survey.FULL) line += ", which also performs a full survey of all planets";
+        else if (survey == Settings.Survey.PRELIMINARY) line += ", which also performs a preliminary survey of all planets";
+        return line;
     }
 
     static String countLabel(String name, int count) {
@@ -293,6 +296,12 @@ public class ObjectsAnalysis extends BaseDurationAbility {
     @Override
     public boolean hasTooltip() {
         return true;
+    }
+
+    /** No "Expand tooltip to view conflicting abilities" line (OAR-8). */
+    @Override
+    public boolean isTooltipExpandable() {
+        return false;
     }
 
     // ---- Detail levels ----
@@ -340,7 +349,7 @@ public class ObjectsAnalysis extends BaseDurationAbility {
     private void addFleets(TooltipMakerAPI tooltip, CampaignFleetAPI player, Settings.Detail detail, float pad, Color bad) {
         List<CampaignFleetAPI> fleets = fleetsInRange(player);
         if (fleets.isEmpty()) {
-            tooltip.addPara("No fleets in range.", bad, pad);
+            tooltip.addPara("No fleets.", bad, pad);
             return;
         }
         if (detail == Settings.Detail.VAGUE) {
@@ -366,7 +375,7 @@ public class ObjectsAnalysis extends BaseDurationAbility {
             return;
         }
         // Precise: every fleet by name, the same names counted together.
-        tooltip.addPara("Fleets in range:", pad);
+        tooltip.addPara("Fleets:", pad);
         Map<String, Integer> counts = new LinkedHashMap<>();
         Map<String, Color> colors = new LinkedHashMap<>();
         for (CampaignFleetAPI f : fleets) {

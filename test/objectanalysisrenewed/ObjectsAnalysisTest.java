@@ -77,4 +77,16 @@ class ObjectsAnalysisTest {
         assertTrue(ObjectsAnalysis.HIDDEN_TAGS.contains("niko_MPC_satellite"));
         assertFalse(ObjectsAnalysis.HIDDEN_TYPES.contains("inactive_gate"));
     }
+
+    @Test
+    void scanLineAddsSurveyOnlyWhenOn() {
+        String base = "Active Ability: System-wide scan: for 5 seconds, prepare a scan pulse that reveals and "
+                + "discovers all objects in the system";
+        assertEquals(base, ObjectsAnalysis.scanLine(Settings.Survey.NONE));
+        assertEquals(base + ", which also performs a preliminary survey of all planets",
+                ObjectsAnalysis.scanLine(Settings.Survey.PRELIMINARY));
+        assertEquals(base + ", which also performs a full survey of all planets",
+                ObjectsAnalysis.scanLine(Settings.Survey.FULL));
+        assertEquals("Lists all objects in the current star system.", ObjectsAnalysis.INTRO);
+    }
 }

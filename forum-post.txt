@@ -58,6 +58,10 @@ My code in this mod is under the CC0 (Creative Commons Zero) License, allowing y
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.3.2[/b]
+[list][li]Shorter tooltip: "Lists all objects in the current star system", no "in range" (the list covers the whole system), no "Gray: already found" line and no "Expand tooltip to view conflicting abilities" line.[/li]
+[li]The scan line now reads "Active Ability: System-wide scan", and names the preliminary or full planet survey only when the Planet survey setting is on.[/li][/list]
+
 [b]1.3.1[/b]
 [list][li]Added the forum topic link for Version Checker.[/li][/list]
 [b]1.3.0[/b]
