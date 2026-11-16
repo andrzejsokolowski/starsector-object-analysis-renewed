@@ -6,6 +6,10 @@
 WHAT DOES THIS MOD DO?
 The Objects Analysis ability from Harpuea's Objects Analysis, without its frame rate cost.
 [/b][/center]
+[spoiler=Screenshots]
+[center][img]https://github.com/andrzejsokolowski/starsector-object-analysis-renewed/blob/main/screenshots/01-ability-tooltip.png?raw=true[/img]
+[img]https://github.com/andrzejsokolowski/starsector-object-analysis-renewed/blob/main/screenshots/02-lunalib-settings.webp?raw=true[/img][/center]
+[/spoiler]
 [center]
 [hr][center][size=12pt][b]The Ability[/b][/size][/center][hr]
 [list]
