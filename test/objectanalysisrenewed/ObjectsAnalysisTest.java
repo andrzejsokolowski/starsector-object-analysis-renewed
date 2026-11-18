@@ -85,6 +85,28 @@ class ObjectsAnalysisTest {
     }
 
     @Test
+    void keepSustainedBurnSlowsInsteadOfStopping() {
+        assertEquals(0.5f, ObjectsAnalysis.scanBurnMult(true));
+        assertEquals(0f, ObjectsAnalysis.scanBurnMult(false));
+    }
+
+    @Test
+    void keepSustainedBurnSparesOnlySustainedBurn() {
+        assertTrue(ObjectsAnalysis.keepsRunning("sustained_burn", true));
+        assertFalse(ObjectsAnalysis.keepsRunning("sustained_burn", false));
+        assertFalse(ObjectsAnalysis.keepsRunning("emergency_burn", true));
+        assertFalse(ObjectsAnalysis.keepsRunning("go_dark", true));
+        assertFalse(ObjectsAnalysis.keepsRunning(null, true));
+    }
+
+    @Test
+    void keepSustainedBurnDefaultsOn() {
+        assertTrue(new Settings.Snapshot(Settings.Detail.PRECISE, true, true, true, "Volatiles", 5).keepBurn);
+        assertFalse(new Settings.Snapshot(Settings.Detail.PRECISE, true, true, true, "Volatiles", 5,
+                Settings.Survey.NONE, false).keepBurn);
+    }
+
+    @Test
     void scanLineAddsSurveyOnlyWhenOn() {
         String base = "Active Ability: System-wide scan: for 5 seconds, prepare a scan pulse that reveals and "
                 + "discovers all objects in the system";

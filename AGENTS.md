@@ -54,6 +54,18 @@ ship names dropped because a big wreck field ran the tooltip off the screen). Va
   (no per-planet message), and for Full also ListenerUtil.reportPlayerSurveyedPlanet, so survey missions
   complete. No survey data commodity and no survey XP are given. One summary message counts objects and planets.
 
+## 1.5.1
+
+Released as 1.5.1, not 1.5.0: a failed commit left a stray `v1.5.0` tag on the 1.4.0 commit (0e65fa6),
+with no release. Leave it.
+
+- `oar_keepBurn` Boolean Keep Sustained Burn (default on, OAR-19). On: the scan multiplies max burn by
+  `SLOW_BURN_MULT` 0.5 instead of 0, and `isCompatible` returns true for `sustained_burn`. The "burn-" tag in
+  abilities.csv stays, so Emergency Burn and Go Dark still conflict. Without the override the game's
+  `interruptIncompatible` turns Sustained Burn off on activation and `disableIncompatible` keeps it off for
+  the whole scan. Sustained Burn itself never interrupts the scan: a duration ability reports `isActive()`
+  false, and toggles do not call `disableIncompatible` every frame.
+
 ## Build
 
 `./gradlew releaseZip test` compiles against the game, runs the checks and tests, and writes

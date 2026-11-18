@@ -51,6 +51,8 @@ public final class Settings {
         final String cost;
         final int costAmount;
         final Survey survey;
+        /** The scan halves the burn level instead of stopping the fleet, and Sustained Burn stays on (OAR-19). */
+        final boolean keepBurn;
 
         Snapshot(Detail detail, boolean showFleets, boolean greyFound, boolean activeScan, String cost, int costAmount) {
             this(detail, showFleets, greyFound, activeScan, cost, costAmount, Survey.PRELIMINARY);
@@ -58,6 +60,11 @@ public final class Settings {
 
         Snapshot(Detail detail, boolean showFleets, boolean greyFound, boolean activeScan, String cost, int costAmount,
                 Survey survey) {
+            this(detail, showFleets, greyFound, activeScan, cost, costAmount, survey, true);
+        }
+
+        Snapshot(Detail detail, boolean showFleets, boolean greyFound, boolean activeScan, String cost, int costAmount,
+                Survey survey, boolean keepBurn) {
             this.detail = detail;
             this.showFleets = showFleets;
             this.greyFound = greyFound;
@@ -65,6 +72,7 @@ public final class Settings {
             this.cost = cost;
             this.costAmount = Math.max(0, costAmount);
             this.survey = survey == null ? Survey.PRELIMINARY : survey;
+            this.keepBurn = keepBurn;
         }
 
         /** The commodity id the scan uses up, or null when it is free. */
@@ -111,13 +119,15 @@ public final class Settings {
         Boolean grey = bool("oar_greyFound");
         Boolean active = bool("oar_activeScan");
         Integer amount = integer("oar_costAmount");
+        Boolean keepBurn = bool("oar_keepBurn");
         return new Snapshot(parseDetail(string("oar_detail")),
                 fleets == null || fleets,
                 grey == null || grey,
                 active == null || active,
                 string("oar_cost"),
                 amount == null ? DEFAULT_COST_AMOUNT : amount,
-                parseSurvey(string("oar_survey")));
+                parseSurvey(string("oar_survey")),
+                keepBurn == null || keepBurn);
     }
 
     /** Unknown or missing text gives the default, Preliminary. */

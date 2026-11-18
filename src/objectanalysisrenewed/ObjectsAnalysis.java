@@ -18,11 +18,13 @@ import com.fs.starfarer.api.campaign.RepLevel;
 import com.fs.starfarer.api.campaign.SectorEntityToken;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.listeners.DiscoverEntityPlugin;
+import com.fs.starfarer.api.characters.AbilityPlugin;
 import com.fs.starfarer.api.combat.ShipAPI.HullSize;
 import com.fs.starfarer.api.combat.ShipHullSpecAPI;
 import com.fs.starfarer.api.combat.ShipVariantAPI;
 import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseDurationAbility;
+import com.fs.starfarer.api.impl.campaign.ids.Abilities;
 import com.fs.starfarer.api.impl.campaign.ids.Factions;
 import com.fs.starfarer.api.impl.campaign.ids.Tags;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
@@ -36,9 +38,10 @@ import com.fs.starfarer.api.util.Misc;
  * isUsable(), which the ability bar calls every frame; here isUsable() is cheap and the list is built only
  * when the tooltip opens.
  *
- * Active scan (setting, on by default): clicking the ability costs some cargo, stops the fleet for about
- * five seconds and then discovers every object in the system, the same way flying up to it would (named
- * on the map, the "Discovered" message, discovery experience).
+ * Active scan (setting, on by default): clicking the ability costs some cargo, halves the fleet's burn
+ * level for about five seconds (Keep Sustained Burn, the default; off: a full stop that turns Sustained Burn
+ * off) and then discovers every object in the system, the same way flying up to it would (named on the
+ * map, the "Discovered" message, discovery experience).
  *
  * Works only inside star systems, never in hyperspace.
  */
@@ -46,6 +49,10 @@ public class ObjectsAnalysis extends BaseDurationAbility {
 
     /** While scanning the fleet is easier to see from afar. */
     public static final float DETECTABILITY_RANGE_BONUS = 2000f;
+
+    /** Max burn multiplier during the scan: half with Keep Sustained Burn on (OAR-19), a full stop with it off. */
+    static final float SLOW_BURN_MULT = 0.5f;
+    static final float STOP_BURN_MULT = 0f;
 
     static final String NEUTRINO = "neutrino";
     static final String NEUTRINO_LOW = "neutrino_low";
@@ -80,8 +87,9 @@ public class ObjectsAnalysis extends BaseDurationAbility {
     protected void applyEffect(float amount, float level) {
         CampaignFleetAPI fleet = getFleet();
         if (fleet == null) return;
-        // Full stop while the pulse charges, and easier to spot.
-        fleet.getStats().getFleetwideMaxBurnMod().modifyMult(getModId(), 0f, "Objects Analysis scan");
+        // Half burn (Keep Sustained Burn) or a full stop while the pulse charges, and easier to spot.
+        fleet.getStats().getFleetwideMaxBurnMod().modifyMult(getModId(), scanBurnMult(Settings.now().keepBurn),
+                "Objects Analysis scan");
         fleet.getStats().getDetectedRangeMod().modifyFlat(getModId(), DETECTABILITY_RANGE_BONUS * level, "Objects Analysis scan");
         if (!performed && level >= 1f) {
             performed = true;
@@ -92,6 +100,28 @@ public class ObjectsAnalysis extends BaseDurationAbility {
                         found + surveyed > 0 ? Misc.getPositiveHighlightColor() : Misc.getGrayColor());
             }
         }
+    }
+
+    static float scanBurnMult(boolean keepBurn) {
+        return keepBurn ? SLOW_BURN_MULT : STOP_BURN_MULT;
+    }
+
+    /**
+     * The "burn-" tag in abilities.csv makes Sustained Burn ("burn+") incompatible: activating the scan
+     * would turn it off and keep it off for the whole scan. With Keep Sustained Burn on (OAR-19) Sustained
+     * Burn counts as compatible; Emergency Burn, Go Dark and the rest still conflict.
+     */
+    @Override
+    public boolean isCompatible(AbilityPlugin other) {
+        if (keepsRunning(other == null || other.getSpec() == null ? null : other.getSpec().getId(),
+                Settings.now().keepBurn)) {
+            return true;
+        }
+        return super.isCompatible(other);
+    }
+
+    static boolean keepsRunning(String abilityId, boolean keepBurn) {
+        return keepBurn && Abilities.SUSTAINED_BURN.equals(abilityId);
     }
 
     @Override

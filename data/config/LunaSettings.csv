@@ -5,7 +5,9 @@ Normal: objects by the names the game shows, fleets counted as hostile, neutral 
 Vague: only whether something is left to salvage, and how many fleets there are.",,,
 oar_fleets,Show fleets,Boolean,true,,List the fleets in the current star system too.,,,
 oar_greyFound,Gray out found objects,Boolean,true,,Objects you have already found show in gray.,,,
-oar_activeScan,Active scan,Boolean,true,,"The ability can be clicked: the fleet stops for about 5 seconds, then every object in the star system is discovered and named on the map. Off: the ability only lists objects when you hover it.",,,
+oar_activeScan,Active scan,Boolean,true,,"The ability can be clicked: the fleet slows down or stops for about 5 seconds (see Keep Sustained Burn), then every object in the star system is discovered and named on the map. Off: the ability only lists objects when you hover it.",,,
+oar_keepBurn,Keep Sustained Burn,Boolean,true,,"On: the active scan halves the fleet's burn level, and Sustained Burn stays on.
+Off: the fleet stops for the scan, and Sustained Burn turns off.",,,
 oar_cost,Scan cost,Radio,Volatiles,"Volatiles, Transplutonics, Nothing",What each active scan uses up from your cargo.,,,
 oar_costAmount,Scan cost amount,Int,5,,How many units each active scan uses up.,0,100,
 oar_survey,Planet survey,Radio,Preliminary,"Preliminary, Full, None","What the active scan does to the planets in the star system.

@@ -15,7 +15,7 @@ The Objects Analysis ability from Harpuea's Objects Analysis, without its frame 
 [list]
 [li]Hover Objects Analysis on your ability bar to list the objects in the current star system: derelicts, caches, abandoned stations, gates and other things worth finding. Colony stations and clutter are left out, repeats are grouped, found objects are gray.[/li]
 [li]It does not say where they are.[/li]
-[li]Click it to scan: the fleet stops for about 5 seconds, then every object in the system is discovered and named on the map, and every planet gets a preliminary survey. Costs 5 volatiles by default.[/li]
+[li]Click it to scan: for about 5 seconds the fleet moves at half its burn level (Sustained Burn stays on), then every object in the system is discovered and named on the map, and every planet gets a preliminary survey. Costs 5 volatiles by default.[/li]
 [li]Works only inside star systems.[/li]
 [/list]
 
@@ -25,6 +25,7 @@ The Objects Analysis ability from Harpuea's Objects Analysis, without its frame 
 [li][b]Show fleets:[/b] on by default.[/li]
 [li][b]Gray out found objects:[/b] on by default.[/li]
 [li][b]Active scan:[/b] on by default. [b]Scan cost:[/b] volatiles, transplutonics or nothing, and how many.[/li]
+[li][b]Keep Sustained Burn:[/b] on by default: the scan halves your burn level and leaves Sustained Burn on. Off: the fleet stops for the scan and Sustained Burn turns off.[/li]
 [li][b]Planet survey:[/b] what the scan does to the planets: Preliminary (default), Full or None.[/li]
 [/list]
 
@@ -62,6 +63,8 @@ My code in this mod is under the CC0 (Creative Commons Zero) License, allowing y
 [/spoiler]
 
 [spoiler=Version log]
+[b]1.5.1[/b]
+[list][li]New LunaLib setting Keep Sustained Burn (on by default): the active scan halves the fleet's burn level instead of stopping it, and no longer turns Sustained Burn off. Turn the setting off for the old full stop.[/li][/list]
 [b]1.4.0[/b]
 [list][li]Updated for Starsector 0.98.5a.[/li][/list]
 [b]1.3.3[/b]
